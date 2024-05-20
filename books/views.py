@@ -18,10 +18,8 @@ def book_create(request):
         published_date = request.POST.get('published_date')
         isbn = request.POST.get('isbn')
         
-        # Get or create the author
         author, created = Author.objects.get_or_create(name=author_name)
         
-        # Create the book
         Book.objects.create(title=title, author=author, published_date=published_date, isbn=isbn)
         return redirect('book_list')
     
@@ -35,7 +33,6 @@ def book_update(request, pk):
         book.published_date = request.POST.get('published_date')
         book.isbn = request.POST.get('isbn')
         
-        # Get or create the author
         author, created = Author.objects.get_or_create(name=author_name)
         book.author = author
         
