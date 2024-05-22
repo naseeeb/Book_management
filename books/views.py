@@ -2,6 +2,9 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
+from django.db import connections
+from django.conf import settings
+from django.db import router
 
 def book_list(request):
     books = Book.objects.all()
@@ -19,6 +22,11 @@ def book_create(request):
         isbn = request.POST.get('isbn')
         
         author, created = Author.objects.get_or_create(name=author_name)
+        
+        db_alias = router.db_for_write(Book)
+        print("Database Alias:", db_alias)
+        
+        
         
         Book.objects.create(title=title, author=author, published_date=published_date, isbn=isbn)
         return redirect('book_list')
@@ -47,3 +55,5 @@ def book_delete(request, pk):
         book.delete()
         return redirect('book_list')
     return render(request, 'book_confirm_delete.html', {'book': book})
+
+
