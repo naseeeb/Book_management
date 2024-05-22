@@ -59,7 +59,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'book_management.wsgi.application'
 
-# Define multiple database configurations
 load_dotenv()
 
 DATABASES = {
